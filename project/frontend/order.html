@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <!--FontAwesome CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+        integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+
+    <!--Chartjs CDN-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="./style.css">
+
+    <title>Order Page</title>
+    <style>
+        .my-card:hover {
+            transform: scale(1.03);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-add-order {
+            background-color: #17a2b8;
+            color: white;
+        }
+
+        .btn-add-order:hover {
+            background-color: #138496;
+            color: white;
+        }
+
+        .btn-remove {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-remove:hover {
+            background-color: #c82333;
+            color: white;
+        }
+
+        .category-container {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .category-select {
+            flex-grow: 1;
+        }
+
+        .add-category-btn {
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-info bg-info">
+        <div class="container">
+            <a class="navbar-brand text-white" href="index.html">Inventory Management</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="index.html">Dashboard <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="profile.html">Admin Profile <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!--End Navbar-->
+
+    <!--Topside-->
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        Information
+                    </div>
+                    <div class="card-body">
+                        <marquee behavior="" direction="">
+                            <h3 class="my-4">Manage your orders here</h3>
+                        </marquee>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        Statistics
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <a class="text-decoration-none text-dark" href="staff.html">
+                                    <div class="card my-card shadow text-center p-3">
+                                        <h4>Staff <i class="fas fa-users"></i></h4>
+                                        <h3>4</h3>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="text-decoration-none text-dark" href="product.html">
+                                    <div class="card my-card shadow text-center p-3">
+                                        <h4>Products <i class="fas fa-box"></i></h4>
+                                        <h3>4</h3>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="text-decoration-none text-dark" href="">
+                                    <div class="card my-card shadow text-center p-3">
+                                        <h4>Orders <i class="fas fa-shipping-fast"></i></h4>
+                                        <h3 id="order-count">0</h3>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Topside-->
+
+    <!--Add Order Form-->
+    <div class="container">
+        <div class="row my-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        Add New Order
+                    </div>
+                    <div class="card-body">
+                        <form id="order-form">
+                            <div class="form-group">
+                                <label for="product">Product</label>
+                                <input type="text" class="form-control" id="product" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <div class="category-container">
+                                    <select class="form-control category-select" id="category" required>
+                                        <option value="" disabled selected>Select a category</option>
+                                        <option value="Electronics">Electronics</option>
+                                        <option value="Clothing">Clothing</option>
+                                        <option value="Furniture">Furniture</option>
+                                        <option value="Groceries">Groceries</option>
+                                        <option value="Books">Books</option>
+                                    </select>
+                                    <button type="button" class="btn btn-info add-category-btn" data-toggle="modal"
+                                        data-target="#categoryModal">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="quantity">Quantity</label>
+                                <input type="number" class="form-control" id="quantity" min="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="order-by">Order By</label>
+                                <input type="text" class="form-control" id="order-by" required>
+                            </div>
+                            <button type="submit" class="btn btn-add-order btn-block">Add Order</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--Order Table-->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                        <span>Orders</span>
+                    </div>
+                    <div class="card-body">
+                        <table class="table bg-white">
+                            <thead class="bg-info">
+                                <tr class="text-white">
+                                    <th scope="col">#</th>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Order by</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-table-body">
+                                <!-- Orders will be added here dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Modal -->
+    <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="categoryModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="categoryModalLabel">Add New Category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="newCategoryName">Category Name</label>
+                        <input type="text" class="form-control" id="newCategoryName"
+                            placeholder="Enter new category name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveCategoryBtn">Save Category</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+        crossorigin="anonymous"></script>
+
+    <script>
+        // Array to store orders
+        let orders = [];
+        let orderIdCounter = 1;
+        let categories = ["Electronics", "Clothing", "Furniture", "Groceries", "Books"];
+
+        // Initialize the category dropdown
+        function initCategoryDropdown() {
+            const select = document.getElementById('category');
+            // Clear existing options except the first one
+            while (select.options.length > 1) {
+                select.remove(1);
+            }
+            // Add current categories
+            categories.forEach(category => {
+                const option = new Option(category, category);
+                select.add(option);
+            });
+        }
+
+        // Add a new category
+        function addNewCategory(categoryName) {
+            if (categoryName && !categories.includes(categoryName)) {
+                categories.push(categoryName);
+                initCategoryDropdown();
+                // Select the newly added category
+                document.getElementById('category').value = categoryName;
+            }
+        }
+
+        // Function to add a new order
+        function addOrder(product, category, quantity, orderBy) {
+            const newOrder = {
+                id: orderIdCounter++,
+                product: product,
+                category: category,
+                quantity: quantity,
+                orderBy: orderBy
+            };
+            orders.push(newOrder);
+            updateOrderTable();
+            updateOrderCount();
+            document.getElementById('order-form').reset();
+        }
+
+        // Function to remove an order
+        function removeOrder(id) {
+            orders = orders.filter(order => order.id !== id);
+            updateOrderTable();
+            updateOrderCount();
+        }
+
+        // Function to update the orders table
+        function updateOrderTable() {
+            const tableBody = document.getElementById('orders-table-body');
+            tableBody.innerHTML = '';
+
+            if (orders.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="6" class="text-center">No orders found</td></tr>';
+                return;
+            }
+
+            orders.forEach(order => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <th scope="row">${order.id}</th>
+                    <td>${order.product}</td>
+                    <td>${order.category}</td>
+                    <td>${order.quantity}</td>
+                    <td>${order.orderBy}</td>
+                    <td>
+                        <button class="btn btn-remove btn-sm" onclick="removeOrder(${order.id})">
+                            <i class="fas fa-trash"></i> Remove
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Function to update the order count
+        function updateOrderCount() {
+            document.getElementById('order-count').textContent = orders.length;
+        }
+
+        // Event listener for form submission
+        document.getElementById('order-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const product = document.getElementById('product').value;
+            const category = document.getElementById('category').value;
+            const quantity = document.getElementById('quantity').value;
+            const orderBy = document.getElementById('order-by').value;
+
+            addOrder(product, category, quantity, orderBy);
+        });
+
+        // Save new category handler
+        document.getElementById('saveCategoryBtn').addEventListener('click', function () {
+            const newCategory = document.getElementById('newCategoryName').value.trim();
+            if (newCategory) {
+                addNewCategory(newCategory);
+                $('#categoryModal').modal('hide');
+                document.getElementById('newCategoryName').value = '';
+            } else {
+                alert('Please enter a category name');
+            }
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            initCategoryDropdown();
+            updateOrderTable();
+            updateOrderCount();
+        });
+    </script>
+</body>
+
+</html>

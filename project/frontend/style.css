@@ -1,0 +1,37 @@
+/* General spacing for forms */
+.form-container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* Product & Staff table styling */
+.table th, .table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+/* Button spacing */
+.btn-sm {
+    margin: 2px;
+}
+
+/* Card enhancements */
+.card.my-card {
+    transition: transform 0.2s ease;
+}
+.card.my-card:hover {
+    transform: scale(1.02);
+}
+
+/* Header text in forms */
+.form-container h4 {
+    font-weight: 600;
+    color: #17a2b8;
+}
+
+/* Form group spacing */
+.form-group label {
+    font-weight: 500;
+}
